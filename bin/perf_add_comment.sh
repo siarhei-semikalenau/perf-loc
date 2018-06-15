@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+URL=http://192.168.99.100:8080
+
 if [[ "$#" -lt 1 ]]; then 
   echo $"Usage: $0 1|5"
   exit 1
@@ -30,7 +32,7 @@ DT=`date +%Y%m%d-%H%M%S`
 LOGF=${SCRIPTPATH}/perf_add_comment_${DT}.log
 CSVF=${SCRIPTPATH}/perf_add_comment_${DT}
 
-locust --locustfile=${SCRIPTPATH}/locust-test.py --host=http://192.168.99.100:8080 --no-web --clients=${CLIENTS} --hatch-rate=1 --run-time=${RUNTIME} --loglevel=ERROR --logfile=${LOGF} --only-summary --csv=${CSVF}
+locust --locustfile=${SCRIPTPATH}/locust-test.py --host=${URL} --no-web --clients=${CLIENTS} --hatch-rate=1 --run-time=${RUNTIME} --loglevel=ERROR --logfile=${LOGF} --only-summary --csv=${CSVF}
 ret=$?
 
 if [ $ret -ne 0 ]; then
