@@ -162,7 +162,7 @@ class UserBehavior(TaskSet):
 						"right":""
 					}
 				},
-				"limit":[0,100],
+				"limit":[0,10],
 				"order_by":[{
 					"name":"updated_at",
 					"desc":"true"
