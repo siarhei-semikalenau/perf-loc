@@ -69,9 +69,14 @@ if [ $ret -ne 0 ]; then
 fi
 
 if [[ "$OP" == "compare" ]]; then
-	paste -d, <(cut -d, -f2,6 <(tail -n +2 <(head -n -1 ${BASEF}_requests.csv))) <(cut -d, -f6 <(tail -n +2 <(head -n -1 ${CSVF}_requests.csv))) | awk -F, '{OFS=","; print $1,$2,$3,$3-$2}' > ${CSVF}_compare.csv
-	cat ${CSVF}_compare.csv
+	if [[ ! -r ${BASEF}_requests.csv ]]; then
+		echo Baseline file doesn''t exist or not readable
+	else 
+		paste -d, <(cut -d, -f2,6 <(tail -n +2 <(head -n -1 ${BASEF}_requests.csv))) <(cut -d, -f6 <(tail -n +2 <(head -n -1 ${CSVF}_requests.csv))) | awk -F, '{OFS=","; print $1,$2,$3,$3-$2}' > ${CSVF}_compare.csv
+		cat ${CSVF}_compare.csv
+	fi
 fi
+
 
 f=$(grep '040\.' ${CSVF}_requests.csv | cut -d, -f6)
 s=$(( ${f//$'\n'/+} ))
